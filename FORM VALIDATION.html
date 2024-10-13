@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FORM VALIDATION</title>
+    <style>
+         body {
+            font-family: Arial, sans-serif;
+            background-color: #4b4141;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        form {
+            margin-top: 100px;
+            margin-bottom: 100px;
+            background-color: #ae9c9c;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        h2 {
+            font-family: cursive;
+            font-size: 24px;
+            font-weight: bolder;
+            margin-bottom: 20px;
+            margin-right: 300px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #1b1818;
+        }
+
+        .input-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 330px;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 12px;
+            flex: 1;
+            padding: 7px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .eye-icon {
+            cursor: pointer;
+            height: 35px;
+            width: 50px;
+        }
+
+        input[type="submit"] {
+            width: 85%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #4eeb6e;
+            color: black;
+            font-weight: bolder;
+        }
+
+        p {
+            color: rgb(199, 26, 26);
+            font-size: 14px;
+            margin: 0 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <form action="" autocomplete="off">
+        <h2>REGISTER</h2>
+        <label for="username">Username : </label> 
+        <input type="text" name="username" id="username" ><p id="un"></p><br>
+
+        <label for="email">Email : </label>
+        <input type="email" name="email" id="email" ><p id="emailId"></p><br>
+
+        <label for="password">Password :</label>
+        <div class="input-container">
+            <input type="password" name="password" id="password">
+            <img src="media/close.png" alt="" class="eye-icon" id="Passclose">
+        </div>
+        <p id="pwd"></p><br>
+
+        <label for="cpassword">Confirm Password : </label>
+        <div class="input-container">
+            <input type="password" name="cpassword" id="cpassword">
+            <img src="media/close.png" alt="" class="eye-icon" id="cPassclose">
+        </div>
+        <p id="cpwd"></p><br>
+
+        <label for="number">Phone No :</label>
+        <input type="text" name="phone" id="phone" ><p id="pphone"></p><br>
+
+        <input type="submit" name="submit" id="submit" value="REGISTER">
+    </form>
+    <script>
+
+    let imgclick=document.getElementById("Passclose");
+
+    let eyepwd=document.getElementById("password");
+
+
+    imgclick.addEventListener("click",()=>{
+
+        let imgEye=document.getElementById("Passclose");
+
+        let Eye_path=imgEye.getAttribute("src");
+
+       if(Eye_path=="media/close.png"){
+        imgEye.setAttribute("src","media/open.png");
+       }
+       else{
+        imgEye.setAttribute("src","media/close.png");
+       }
+    })
+
+
+    imgclick.addEventListener("click",()=>{
+        if(eyepwd.type==="password"){
+            eyepwd.type="text";
+            console.log("text")
+        }else{
+            eyepwd.type="password";
+           console.log("password")
+        }
+    })
+
+    let cimgclick=document.getElementById("cPassclose");
+
+    let ceyepwd=document.getElementById("cpassword");
+
+
+    cimgclick.addEventListener("click",()=>{
+
+        let cimgEye=document.getElementById("cPassclose");
+
+        let cEye_path=cimgEye.getAttribute("src");
+
+       if(cEye_path=="media/close.png"){
+        cimgEye.setAttribute("src","media/open.png");
+       }
+       else{
+        cimgEye.setAttribute("src","media/close.png");
+       }
+    })
+
+
+    cimgclick.addEventListener("click",()=>{
+        if(ceyepwd.type==="password"){
+            ceyepwd.type="text";
+            //console.log("text")
+        }else{
+            ceyepwd.type="password";
+           //console.log("password")
+        }
+    })
+
+        
+        //get the submit botton
+        let submit=document.getElementById("submit");
+
+         //get the username
+        let username=document.querySelector("#username");
+
+         //get the email
+         let email=document.querySelector("#email");
+
+        //get the password
+        let password=document.querySelector("#password");
+
+        
+        //get the password
+        let cpassword=document.querySelector("#cpassword");
+
+        //get the password
+        let phone=document.querySelector("#phone");
+
+        submit.addEventListener('click',(event)=>{
+            event.preventDefault();
+
+                
+            //alert("Please fill out all fields !");
+
+                //USERNAME 
+                //get the p tag in username
+                let puser=document.getElementById("un");
+
+                
+                //give the event listener
+                 submit.addEventListener("click",(event)=>{
+
+            event.preventDefault();
+           
+            if(username.value.trim()===""){
+                //alert("welcome");
+
+                username.style.border="2px solid red";
+
+                puser.innerHTML="please enter the username";
+            }
+            else{
+                username.style.border="2px solid lightgreen";
+
+                pUN.innerHTML="";
+            } 
+        });
+
+        username.addEventListener("keypress",()=>{
+           
+            username.style.border="2px solid lightgreen";
+
+            puser.innerHTML="";
+        });
+
+
+        // EMAIL 
+
+       
+
+        //get the p tag in username
+        let pemail=document.getElementById("emailId");
+
+       
+
+        //give the event listener
+        submit.addEventListener("click",(event)=>{
+
+            event.preventDefault();
+           
+            if(email.value.trim()===""){
+                //alert("welcome");
+
+                email.style.border="2px solid red";
+
+                pemail.innerHTML="please enter the email Id";
+            }
+            else{
+                if(/^[a-zA-Z0-9@]+$/.test(email.value)){
+                    email.style.border="2px solid red";
+
+                    pemail.innerHTML="please enter valid email Id";  
+                }
+                
+                else{
+                    
+                    email.style.border="2px solid lightgreen";
+
+                     pemail.innerHTML="";
+
+                }
+            } 
+        });
+
+        email.addEventListener("keypress",()=>{
+           
+            email.style.border="2px solid lightgreen";
+
+            pemail.innerHTML="";
+        });
+
+
+        
+        // PASSWORD 
+
+    
+
+        //get the p tag in username
+        let ppass=document.getElementById("pwd");
+
+       
+        //give the event listener
+        submit.addEventListener("click",(event)=>{
+
+            event.preventDefault();
+           
+            if(password.value.trim()===""){
+                //alert("welcome");
+
+                password.style.border="2px solid red";
+
+                ppass.innerHTML="please enter the password";
+
+            }
+            else{
+
+                if(password.value.length <=8 ){
+                     ppass.innerHTML="charater must be 8 or above";
+                     password.style.border="2px solid red";
+                  }
+                  else{
+                    password.style.border="2px solid lightgreen";
+
+                    ppass.innerHTML="";
+                   
+                        if(password.value===cpassword.value){
+                         pass
+                         }
+                        else{
+                         ppass.innerHTML="check the password and confirm password";
+                         cppass.innerHTML="check the password and confirm password";
+
+                         cpassword.style.border="2px solid red";
+                         password.style.border="2px solid red";
+                        }
+
+                  }
+            } 
+        });
+
+       
+        password.addEventListener("keypress",()=>{
+           
+            password.style.border="2px solid lightgreen";
+
+            ppass.innerHTML="";
+        });
+    
+        //CONFIRM PASSWORD 
+
+
+        //get the p tag in username
+        let cppass=document.getElementById("cpwd");
+
+       
+        //give the event listener
+        submit.addEventListener("click",(event)=>{
+
+            event.preventDefault();
+           
+            if(cpassword.value.trim()===""){
+                //alert("welcome");
+
+                cpassword.style.border="2px solid red";
+
+                cppass.innerHTML="please enter the confirm password";
+            }
+            else{
+                if(cpassword.value.length <=8 ){
+                     cppass.innerHTML="charater must be 8 or above";
+                     cpassword.style.border="2px solid red";
+                  }
+                  else{
+                    cpassword.style.border="2px solid lightgreen";
+
+                    cppass.innerHTML="";
+
+                    if(password.value===cpassword.value){
+                         pass
+                         }
+                        else{
+                         ppass.innerHTML="check the password and confirm password";
+                         cppass.innerHTML="check the password and confirm password";
+
+                         cpassword.style.border="2px solid red";
+                         password.style.border="2px solid red";
+                        }
+
+                  }
+            } 
+        });
+
+        cpassword.addEventListener("keypress",()=>{
+           
+            cpassword.style.border="2px solid lightgreen";
+
+            cppass.innerHTML="";
+        });
+    
+       
+        //PHONE NUMBER
+
+    
+
+        //get the p tag in username
+        let pphone=document.getElementById("pphone");
+
+       
+        submit.addEventListener("click",(event)=>{
+
+        event.preventDefault();
+           
+        if(phone.value.trim()===""){
+                //alert("welcome");
+
+                phone.style.border="2px solid red";
+
+                pphone.innerHTML="please enter phone number";
+         }
+         else{
+                if(phone.value.length < 10 && /[^0-9]/.test(phone.value)){
+
+                    phone.style.border="2px solid red";
+                    pphone.innerHTML="please enter valid phone number";
+                  }
+                  else{
+                    phone.style.border="2px solid lightgreen";
+
+                    pphone.innerHTML="";
+
+                    }
+            } 
+        });
+
+        phone.addEventListener("keypress",()=>{
+           
+            phone.style.border="2px solid lightgreen";
+
+            pphone.innerHTML="";
+        });
+
+
+         })
+        
+        
+         submit.addEventListener("click",(event)=>{
+            event.preventDefault();
+            if(username.value.trim() !=="" && email.value.trim()!=="" && password.value.trim()!=="" && phone.value.trim()!=="" && password.value.trim()!=="" ){
+                alert("Register successfully");
+                username.value="";
+                email.value="";
+                password.value="";
+                cpassword.value="";
+                phone.value="";
+            }
+         })
+       
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRADE CALCULATOR</title>
+    <style>
+        body{
+            background-color: aqua;
+        }
+        .customcss{
+            background-color: rgb(7, 129, 157);
+        }
+        #container{
+            background-color: rgb(176, 236, 236);
+            align-items: center;
+            border: 2px solid blue;
+            border-radius: 20px;
+            margin-left: 450px;
+            margin-top: 60px;
+            width: 530px;
+            padding: 20px;
+            text-align: center;
+        }
+        input{
+            font-family: 'Times New Roman', Times, serif;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-bottom: 2px solid black;
+            border-radius: 0px;
+            background-color: rgb(176, 236, 236);
+        }
+        #head2{
+            font-family: 'Times New Roman', Times, serif;
+            text-decoration: underline;
+        }
+        button{
+            font-family: 'Times New Roman', Times, serif;
+            border: 2px solid rgb(15, 102, 129);
+            color: aliceblue;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-size: 20px;
+            background-color: rgb(11, 146, 146);
+            
+        }
+        button:hover{
+            background-color: rgb(116, 183, 232);
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h2 id="head2">GRADE CALCULATOR</h2>
+           
+            <input id="t1" class="inpt" type="text" placeholder="Enter the Tamil mark"><br><br>
+            <input id="t2" class="inpt" type="text" placeholder="Enter the English mark"><br><br>
+            <input id="t3" class="inpt" type="text" placeholder="Enter the Maths mark"><br><br>
+            <input id="t4" class="inpt" type="text" placeholder="Enter the Science mark"><br><br>
+            <input id="t5" class="inpt" type="text" placeholder="Enter the Social Science mark"><br><br>
+            <button id="btn" onclick="result()">Result</button><br>
+            <h3 id="total"></h3>
+            <h3 id="percentage"></h3>
+            <h3 id="pf"></h3>
+                
+    </div>
+    <script>
+       
+       function result()
+       {
+        let input1=document.getElementById("t1");
+        let input2=document.getElementById("t2");
+        let input3=document.getElementById("t3");
+        let input4=document.getElementById("t4"); 
+        let input5=document.getElementById("t5");
+
+        let in1=+(document.getElementById("t1").value);
+        let in2=+(document.getElementById("t2").value);
+        let in3=+(document.getElementById("t3").value);
+        let in4=+(document.getElementById("t4").value); 
+        let in5=+(document.getElementById("t5").value);
+
+        if(input1.value.trim()==="" || input2.value.trim()==="" || input3.value.trim()==="" || input4.value.trim()==="" || input5.value.trim()===""  )
+        {
+            alert("please enter all the data");
+        }
+        else 
+        {
+            if((in1>=0 && in1<=100) && (in2>=0 && in2<=100) && (in3>=0 && in3<=100) && (in3>=0 && in3<=100) && (in4>=0 && in4<=100) && (in5>=0 && in5<=100))
+             {   //total
+            let total=in1+in2+in3+in4+in5;
+            let tot=document.getElementById("total");
+            tot.innerHTML=`The total is ${total}`;
+
+            //percentage
+            let percentage=total/500*100;
+            let percentage1=percentage.toFixed(2);
+            let per=document.getElementById("percentage");
+            per.innerHTML=`The percentage is ${percentage1} %`;
+
+            //pass or fail
+            if(in1>=35 && in2>=35 && in3>=35 && in4>=35 && in5>=35)
+            {
+                let pass=document.getElementById("pf");
+                pass.innerHTML=`PASS`;
+            }
+            else
+            {
+                let fail=document.getElementById("pf");
+                fail.innerHTML=`FAIL`;
+            }
+            }
+            else
+            {
+                alert("please enter valid data");
+            }
+
+            let botton=document.body;
+            botton.classList.toggle("customcss");
+        }
+            
+        }
+    </script>
+</body>
+</html>

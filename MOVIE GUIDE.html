@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOBIE GUIDE</title>
+    <style>
+        body {
+            font-family: cursive;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #797556;
+        }
+
+        #searchBar {
+            margin: 20px;
+            margin-top: 60px;
+            display: flex;
+            align-items: center;
+          
+        }
+
+        #searchBar input {
+            font-family: cursive;
+            width: 500px;
+            padding: 10px;
+            font-size: 16px;
+            border: 3px solid #151313;
+            border-radius: 20px;
+            outline: none;
+            margin-right: 10px;
+            box-shadow: 0 0 90px 10px rgba(0, 0, 0, 0.2);
+        }
+    
+
+        #searchBar img {
+            cursor: pointer;
+        }
+
+        #movie {
+            box-shadow: 0 0 50px 10px rgba(0, 0, 0, 0.2);
+            margin-top: 30px;
+            width: 50%;
+            max-width: 1200px;
+            background-color: #e5e862;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        #details {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+        }
+
+        #movieImage {
+            border-radius: 8px;
+            margin-right: 20px;
+        }
+
+        #movieStuff {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #movieTitle {
+            margin: 0;
+            font-size: 36px;
+            color: #262525;
+        }
+
+        #movieType, #movieStatus, #movieRating ,#movieLanguage{
+            margin: 5px 0;
+            color: #141313;
+        }
+
+        #summary {
+            margin: 10px 0 0;
+            color: #444;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+<div id="searchBar">
+    <input type="text" name="movieName" id="movieName" placeholder="Search the movie">
+    <img src="media/search.png" alt="search" height="50px" width="50px" id="searchIcon">
+</div> 
+
+<div id="movie">  
+    <div id="details"> 
+        <img src="media/movie.png" alt="movie image" height="300px" width="300px" id="movieImage">
+        <div id="movieStuff">
+            <h1 id="movieTitle"></h1>
+            <h3 id="movieType"></h3>
+            <h3 id="movieLanguage"></h3>
+            <h3 id="movieStatus"></h3>
+            <h3 id="movieRating"></h3>
+            <p id="summary"></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    //get the input
+    let inputValue = document.querySelector("#movieName");
+
+    //get the image icon
+    let imgIcon = document.querySelector("#searchIcon");
+
+    //get the movie title
+    let MovieTitle = document.querySelector("#movieTitle");
+
+    //get the image movie
+    let MovieImage=document.querySelector("#movieImage");
+    
+    //get movie language
+    let MovieLanguage=document.querySelector("#movieLanguage");
+
+     //get movie type
+     let MovieType=document.querySelector("#movieType");
+
+      
+     //get movie status
+     let MovieStatus=document.querySelector("#movieStatus");
+
+     //get movie rating
+     let MovieRating=document.querySelector("#movieRating");
+
+    //get movie summary
+    let MovieSum=document.querySelector("#summary");
+
+    //block the view
+    let MovieDetails=document.getElementById("movie");
+    MovieDetails.style.display="none";
+
+    imgIcon.addEventListener("click", async (event) => {
+        event.preventDefault();
+
+        MovieDetails.style.display="block";
+
+        let inputValueData = inputValue.value;
+        console.log(inputValueData);
+
+        let fetchAPI = fetch(`https://api.tvmaze.com/search/shows?q=${inputValueData}`);
+
+        let response = await fetchAPI;
+
+        let fulldata = response.json();
+        console.log(fulldata);
+
+        let obj = await fulldata;
+        console.log(obj);
+
+        //get the name
+        console.log(obj[0].show);
+        console.log(obj[0].show.name);
+        //add movie name
+        let MName=obj[0].show.name;
+        MovieTitle.innerHTML=`Title : ${MName}`;
+
+
+        //get the image link
+        console.log(obj[0].show.image.medium);
+        let MUrl=obj[0].show.image.medium;
+        //add to the image url
+        MovieImage.src=MUrl;
+
+
+
+        //get the language
+        let MLan=obj[0].show.language
+        console.log(obj[0].show.language);
+        //add to the language
+        MovieLanguage.innerHTML=`Language : ${MLan}`;
+
+
+        //movie type
+        let MType=obj[0].show.type;
+        console.log(obj[0].show.type);
+        //add to the language
+        MovieType.innerHTML=`Type : ${MType}`;
+
+        //movie status
+        let Mstatus=obj[0].show.status;
+        console.log(obj[0].show.status);
+        //add to the status
+        MovieStatus.innerHTML=`Status : ${Mstatus}`;;
+
+
+        //get the ratings
+        let MRat=obj[3].show.rating.average;
+        console.log(obj[1]);
+        console.log(obj[3].show.rating.average);
+        MovieRating.innerHTML=`Ratings : ${MRat} m/v`;
+
+
+        //get the summary
+        let MSum=obj[2].show.summary;
+        console.log(obj[2].show.summary);
+        //add summmary
+        MovieSum.innerHTML=`Summary : ${MSum}`;
+
+    });
+</script>
+</body>
+</html>

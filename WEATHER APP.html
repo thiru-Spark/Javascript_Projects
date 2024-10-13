@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEATHER APP</title>
+    <style>
+        /* General Reset */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #4debf6;
+            color: #333;
+            font-family: cursive;
+        }
+
+        #weather {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 20px;
+            background-color: #bacbcb;
+            box-shadow: 0 0 65px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #first_three, #last_three {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        /* Styling for input and search icon */
+        #first_three input {
+            font-family: cursive;
+            width: 400px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            border: 2px solid black;
+            margin-right: 10px;
+            flex: 1;
+        }
+
+        #search {
+            cursor: pointer;
+        }
+
+        /* Flex container for input and search button */
+        .input-container {
+            font-family: cursive    ;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        /* Flex container for place icon and name */
+        .place-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        #city {
+            margin-right: 10px;
+        }
+
+        /* Flex container for temperature icon and value */
+        .temp-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        #temp {
+            margin-left: 10px;
+        }
+
+        /* Flex container for wind, latitude, and longitude */
+        .details-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .details-container div {
+            display: flex;
+            align-items: center;
+        }
+
+        .details-container img {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="weather">
+        <div id="first_three">
+            <!-- Input field and search icon in horizontal line -->
+            <div class="input-container">
+                <input type="text" id="place" placeholder="Enter city name">
+                <img src="media/search.png" height="40px" width="50px" id="search">
+            </div>
+
+            <!-- Place icon and name in vertical line -->
+            <div class="place-container">
+                <img src="media/city.png" alt="city" id="city" height="30px" width="40px">
+                <h1 id="visiblePlace"></h1>
+            </div>
+
+            <!-- Cloud icon and temperature info -->
+            <img src="media/clear sky.png" alt="cloud" id="cloud" height="100px" width="150px">
+            <div class="temp-container"><br>
+                <img src="media/temp.png" alt="temp" id="temp" height="30px" width="40px"><br>
+                <h2 id="tempPlace">Temp : </h2>
+            </div>
+        </div>
+
+        <!-- Wind speed, latitude, and longitude in horizontal line -->
+        <div id="last_three" class="details-container">
+            <div>
+                <img src="media/wind.png" alt="windplace" id="windplace" height="30px" width="40px"  >
+                <h2 id="wind">Wind : </h2>
+            </div>
+            <div>
+                <img src="media/latitude.png" alt="lati" id="lat" height="30px" width="40px">
+                <h2 id="latitude">Lat : </h2>
+            </div>
+            <div>
+                <img src="media\longitude .png" alt="lon" id="lon" height="30px" width="40px">
+                <h2 id="longitude">Lon : </h2>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        //search icon
+        let search = document.querySelector("#search");
+        
+        //input field
+        let city = document.getElementById("place");
+
+        //visible place
+        let visiblePlace = document.getElementById("visiblePlace");
+
+        //cloud conditionz
+        let cloudCon=document.getElementById("cloud");
+
+        //temperature
+        let temp = document.getElementById("tempPlace");
+
+        //wind
+        let wind = document.getElementById("wind");
+
+        //latitude
+        let latitude = document.getElementById("latitude");
+
+        //longitude
+        let longitude = document.getElementById("longitude");
+
+        search.addEventListener("click", async () => {
+            let place = city.value;
+            let apikey = "f8dc791b029570d47ae7f3190ff3ec37";
+            let apiurl = `https://api.openweathermap.org/data/2.5/weather?units=metric&q=`;
+
+            let response = await fetch(apiurl + `${place}` + `&appid=${apikey}`);
+            console.log(response);
+
+            let fulldata = response.json();
+            console.log(fulldata);
+
+            let obj = await fulldata;
+            console.log(obj);
+            
+            //city name
+            let placeName = obj.name;
+            visiblePlace.innerHTML = `${placeName}`;
+            console.log(obj.name);
+
+            //temperature
+            let placeTemp = Math.round(obj.main.temp);
+            temp.innerHTML = `Temp : ${placeTemp} °C`;
+            console.log("temperature :" + obj.main.temp);
+             
+            //cloud condition
+            let cloudCondition=obj.weather[0].description;
+            
+            cloudCon.setAttribute("src",`media/${cloudCondition}.png`)
+            console.log(obj.weather[0].description);
+            console.log(obj.weather[0].icon);
+
+            //latitude
+            let placeLat = Math.round(obj.coord.lat);
+            latitude.innerHTML = `Lat : ${placeLat} °N`;
+            console.log(obj.coord.lat);
+
+            //longitude
+            let placeLon = Math.round(obj.coord.lon);
+            longitude.innerHTML = `Lon : ${placeLon} °W`;
+            console.log(obj.coord.lon);
+
+            //wind speed
+            let WindSpeed = Math.round(obj.wind.speed);
+            wind.innerHTML = `Wind : ${WindSpeed} km/h`;
+            console.log(obj.wind.speed);
+        });
+    </script>
+</body>
+</html>

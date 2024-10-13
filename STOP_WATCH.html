@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STOPWATCH</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        #time {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            margin: 0;
+        }
+        button {
+            border: 2px solid rgb(98, 16, 98);
+            border-radius: 6px;
+            color: aliceblue;
+            background-color: rgb(81, 26, 148);
+            font-size: 20px;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            margin: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: rgb(235, 179, 239);
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="time">
+            <h1 id="hours">00</h1>:<h1 id="minutes">00</h1>:<h1 id="seconds">00</h1>
+        </div>
+        <button id="start">START</button>
+        <button id="stop">STOP</button>
+        <button id="end">END</button>
+    </div>
+    <script>
+        let secondsDisplay = document.getElementById("seconds");
+        let minutesDisplay = document.getElementById("minutes");
+        let hoursDisplay = document.getElementById("hours");
+
+        let startButton = document.getElementById("start");
+        let stopButton = document.getElementById("stop");
+        let endButton = document.getElementById("end");
+
+        let count = 0;
+        let startTime = null;
+
+        let minutes = 0;
+        let hours = 0;
+
+        function formatTime(value) {
+            return value < 10 ? `0${value}` : value;
+        }
+
+        startButton.addEventListener('click', () => {
+            if (startTime === null) {  // Start a new interval only if one isn't already running
+                startTime = setInterval(() => {
+                    count++;
+                    secondsDisplay.innerHTML = formatTime(count);
+
+                    if (count === 60) {
+                        count = 0;
+                        secondsDisplay.innerHTML = formatTime(count);
+
+                        minutes++;
+                        minutesDisplay.innerHTML = formatTime(minutes);
+
+                        if (minutes === 60) {
+                            minutes = 0;
+                            minutesDisplay.innerHTML = formatTime(minutes);
+
+                            hours++;
+                            hoursDisplay.innerHTML = formatTime(hours);
+
+                            if (hours === 24) {
+                                hours = 0;
+                                hoursDisplay.innerHTML = formatTime(hours);
+                            }
+                        }
+                    }
+                }, 1000);
+            }
+        });
+
+        stopButton.addEventListener('click', () => {
+            clearInterval(startTime);
+            startTime = null; // Reset startTime so we can start again
+        });
+
+        endButton.addEventListener("click", () => {
+            clearInterval(startTime);
+            startTime = null; // Reset startTime so we can start again
+            count = 0;
+            minutes = 0;
+            hours = 0;
+            secondsDisplay.innerHTML = formatTime(count);
+            minutesDisplay.innerHTML = formatTime(minutes);
+            hoursDisplay.innerHTML = formatTime(hours);
+        });
+    </script>
+</body>
+</html>

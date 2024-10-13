@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRODUCTS GUIDE</title>
+    <style>
+ /* Resetting margin and padding for all elements */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: cursive;
+    background-color: blueviolet;
+}
+
+/* Styling for the search bar */
+#searchBar {
+    
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+#product {
+    padding: 10px;
+    font-size: 16px;
+}
+
+#searchIcon {
+    cursor: pointer;
+    margin-left: 10px;
+   
+   
+}
+input{
+    font-family: cursive;
+    border: 3px solid black;
+    border-radius: 10px;
+    width: 400px;
+}
+
+/* Styling for the details container */
+#details {
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 100px;
+    padding: 20px;
+    width: 100%;
+    height: auto;
+}
+
+/* Styling for the left and right divs inside details */
+#left {
+    box-shadow: 0 0 15px 10px rgba(0, 0, 0, 0.2);
+    margin-left: 200px;
+    flex: 1;
+    padding: 80px;
+    text-align: left;
+    border: 2px solid rgb(101, 101, 95);
+    border-radius: 20px;
+    background-color: rgb(215, 155, 247);
+    
+}
+
+#right {
+    flex: 1;
+    margin-top: 50px;
+    margin-left: 100px;
+    margin-right: 300px;
+    padding: 20px;
+    text-align: right;
+   
+}
+
+#Pimage {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Additional styles for better visual representation */
+h2, p {
+    margin-bottom: 10px;
+}
+
+    </style>
+</head>
+<body>
+
+<div id="searchBar">
+    <input type="text" name="product" id="product" placeholder="Search the product">
+    <img src="media/search.png" alt="search" height="50px" width="50px" id="searchIcon">
+</div>
+<div id="details">
+    <div id="left">
+        <h2 id="inpt"></h2>
+        <h2 id="category"></h2>
+        <h2 id="price"></h2>
+        <h2 id="rating"></h2>
+        <h2 id="return"></h2>
+        <h2 id="wanrranty"></h2>
+        <h2 id="discount"></h2>
+        <p id="description"></p>
+    </div>
+    <div id="right">
+        <img src="media/productView.png" alt="product" id="Pimage" height="300px" width="300px">
+    </div>
+</div>
+
+
+<script>
+    //get the input
+    let inputValue = document.querySelector("#product");
+
+    //get the image icon
+    let imgIcon = document.querySelector("#searchIcon");
+
+
+    //get the cetagory
+    let inputSearch = document.querySelector("#inpt");
+
+    //get the cetagory
+     let category = document.querySelector("#category");
+
+     //get the cetagory
+     let price = document.querySelector("#price");
+
+     
+     //get the cetagory
+     let rating = document.querySelector("#rating");
+
+      //get the cetagory
+      let PRreturn = document.querySelector("#return");
+
+      
+      //get the cetagory
+      let wanrranty = document.querySelector("#wanrranty");
+
+     //get the cetagory
+     let discount = document.querySelector("#discount");
+
+    //get the cetagory
+      let description = document.querySelector("#description");
+
+      //get the product image
+      let pImage=document.getElementById("Pimage");
+
+      //block the view
+      let detailsView=document.getElementById("left");
+      detailsView.style.display="none";
+   
+
+    imgIcon.addEventListener("click", async (event) => {
+        event.preventDefault();
+
+        detailsView.style.display="block";
+
+        let inputValueData = inputValue.value;
+        console.log(inputValueData);
+        inputSearch.innerHTML=`Your search is : ${inputValueData}`;
+
+
+        let fetchAPI = fetch(`https://dummyjson.com/products/search?q=${inputValueData}`);
+
+        let response = await fetchAPI;
+
+        let fulldata = response.json();
+        console.log(fulldata);
+
+        let obj = await fulldata;
+        console.log(obj);
+
+        let finaldata=obj.products;
+        console.log(finaldata);
+
+       //get the category
+       let Pcategory=obj.products[1].category;
+       console.log(Pcategory);
+       category.innerHTML=`Category is ${Pcategory}`;
+
+       //get the image
+       let Pimage=obj.products[0].images[0];
+       console.log(Pimage);
+       pImage.src=Pimage;
+
+       //get the price
+       let Pprice=obj.products[1].price;
+       console.log(Pprice);
+       price.innerHTML=`Price is $ ${Pprice}`;
+
+        //get the ratings
+       let Pratings=obj.products[1].rating;
+       console.log(Pratings);
+       rating.innerHTML=`Ratings : ${Pratings} m/v`;
+
+        //get the return
+        let Preturn=obj.products[1].returnPolicy;
+        console.log(Preturn);
+        PRreturn.innerHTML=`Return : ${Preturn}`;
+
+              
+        //get the discount
+        let PDisc=obj.products[1].discountPercentage;
+        console.log(PDisc);
+        discount.innerHTML=`Discount is ${PDisc} %`;
+
+        
+        //get the warranty
+         let PWarr=obj.products[1].warrantyInformation;
+        console.log(PWarr);
+        wanrranty.innerHTML=`${PWarr}`;
+
+        //get the description
+        let PDesc=obj.products[1].description;
+        console.log(PDesc);
+        description.innerHTML=` ${PDesc}`;
+    });
+
+</script>
+</body>
+</html>
